@@ -1,0 +1,33 @@
+name: paperplane
+description: The mobile client for PaperPlane v2 chat platform.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^1.0.0
+  dynamic_theme: ^1.0.1
+  animations: ^1.0.0+5
+  pinenacl: ^0.1.2
+  animated_text_kit: ^2.0.1
+  shared_preferences: ^0.5.7+2
+  dio: ^3.0.9
+  flutter_icons: ^1.1.0
+  image_picker: ^0.6.6+1
+  path_provider: ^1.6.8
+  uuid: ^2.0.4
+  aes_crypt: ^0.1.1
+  path: ^1.7.0
+  flutter_secure_storage:
+    git: https://github.com/mogol/flutter_secure_storage
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
