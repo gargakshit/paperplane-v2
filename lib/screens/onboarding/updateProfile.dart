@@ -114,7 +114,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      pickPhoto();
+                      if (!isLoading) {
+                        pickPhoto();
+                      }
                     },
                     child: InkWell(
                       child: Container(

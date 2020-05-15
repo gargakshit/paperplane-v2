@@ -59,6 +59,12 @@ class MyApp extends StatelessWidget {
         textTheme: textTheme,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: pageTransitionsTheme,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primaryColorLight,
+        ),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+        ),
       ),
       darkTheme: ThemeData.dark().copyWith(
         primaryColor: primaryColorDark,
@@ -69,6 +75,27 @@ class MyApp extends StatelessWidget {
         textTheme: textTheme,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: pageTransitionsTheme,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primaryColorDark,
+        ),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+        ),
+        bottomNavigationBarTheme:
+            ThemeData.dark().bottomNavigationBarTheme.copyWith(
+                  unselectedIconTheme: IconThemeData(
+                    color: Colors.white.withOpacity(0.9),
+                  ),
+                  unselectedLabelStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                  ),
+                  selectedIconTheme: IconThemeData(
+                    color: primaryColorDark,
+                  ),
+                  selectedLabelStyle: TextStyle(
+                    color: primaryColorDark,
+                  ),
+                ),
       ),
       debugShowCheckedModeBanner: false,
       home: FutureBuilder<LoadingModel>(
