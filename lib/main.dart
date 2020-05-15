@@ -48,13 +48,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PaperPlane',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         primaryColor: primaryColorLight,
         accentColor: primaryColorLight,
         iconTheme: IconThemeData(
           color: ThemeData.light().iconTheme.color,
         ),
-        brightness: WidgetsBinding.instance.window.platformBrightness,
         textTheme: textTheme,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: pageTransitionsTheme,
@@ -65,7 +65,6 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
-        brightness: WidgetsBinding.instance.window.platformBrightness,
         textTheme: textTheme,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: pageTransitionsTheme,
