@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:math';
 
 import 'package:aes_crypt/aes_crypt.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,6 +15,9 @@ import 'package:uuid/uuid.dart';
 
 import 'package:paperplane/constants/onBoardingState.dart';
 import 'package:paperplane/constants/api.dart';
+import 'package:paperplane/constants/colors.dart';
+import 'package:paperplane/models/ui/encFuncParam.dart';
+import 'package:paperplane/utils/encrypt.dart';
 import 'package:paperplane/main.dart';
 
 class UpdateProfilePage extends StatefulWidget {
@@ -47,8 +52,43 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   pickPhoto() async {
     final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
+    File croppedFile = await ImageCropper.cropImage(
+      sourcePath: image.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+      ],
+      aspectRatio: CropAspectRatio(
+        ratioX: 1,
+        ratioY: 1,
+      ),
+      compressFormat: ImageCompressFormat.png,
+      maxHeight: 640,
+      maxWidth: 640,
+      compressQuality: 100,
+      cropStyle: CropStyle.rectangle,
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: "Crop",
+        toolbarColor: Color(0xff212121),
+        activeControlsWidgetColor: primaryColorLight,
+        toolbarWidgetColor: Colors.white,
+        statusBarColor: Color(0xff212121),
+        initAspectRatio: CropAspectRatioPreset.square,
+        lockAspectRatio: true,
+        backgroundColor: Color(0xff212121),
+        dimmedLayerColor: Color(0xff212121),
+        cropFrameStrokeWidth: 8,
+        cropGridStrokeWidth: 6,
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+        aspectRatioLockEnabled: true,
+        aspectRatioPickerButtonHidden: true,
+        showCancelConfirmationDialog: true,
+      ),
+    );
+
     setState(() {
-      profilePhoto = image;
+      profilePhoto = croppedFile;
     });
   }
 
@@ -98,7 +138,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         child: Center(
                           child: profilePhoto == null
                               ? Icon(
-                                  Feather.user,
+                                  Feather.image,
                                   color: Theme.of(context).canvasColor,
                                   size: (MediaQuery.of(context).size.width /
                                           5) -
@@ -166,14 +206,21 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                       (await getApplicationDocumentsDirectory())
                                           .path;
                                   String encPath = join(docsDir, "pfp.aes");
-                                  String pfpPath = join(docsDir, "pfp.jpg");
+                                  String pfpPath = join(docsDir, "pfp.png");
 
-                                  await File(pfpPath).writeAsBytes(
-                                    await profilePhoto.readAsBytes(),
+                                  ReceivePort receivePort = ReceivePort();
+
+                                  await Isolate.spawn(
+                                    encryptProfilePhoto,
+                                    EncFuncParam(
+                                      file: profilePhoto,
+                                      crypt: crypt,
+                                      sendPort: receivePort.sendPort,
+                                      pfpPath: pfpPath,
+                                      encPath: encPath,
+                                    ),
                                   );
-
-                                  await crypt.encryptFile(
-                                      profilePhoto.path, encPath);
+                                  await receivePort.first;
 
                                   await prefs.setString("pfpPass", password);
                                   await prefs.setBool("hasPfp", true);
@@ -187,7 +234,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                                       {
                                         "file": await MultipartFile.fromFile(
                                           encPath,
-                                          filename: "pfp.jpg",
+                                          filename: "pfp",
                                         ),
                                       },
                                     ),
@@ -247,5 +294,12 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+
+    super.dispose();
   }
 }

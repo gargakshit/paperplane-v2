@@ -10,6 +10,8 @@ import 'package:paperplane/models/ui/loadingModel.dart';
 import 'package:paperplane/constants/theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
           hasPfp: prefs.getBool("hasPfp"),
           name: prefs.getString("myName"),
           pfpPath:
-              join((await getApplicationDocumentsDirectory()).path, "pfp.jpg"),
+              join((await getApplicationDocumentsDirectory()).path, "pfp.png"),
         );
       } else {
         return LoadingModel(
