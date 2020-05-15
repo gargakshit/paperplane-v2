@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -100,17 +101,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: currentItem,
-        children: [
+      body: PageTransitionSwitcher(
+        transitionBuilder: (
+          Widget child,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return FadeThroughTransition(
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: [
           ChatScreen(),
           Center(
             child: Text("Contacts"),
           ),
-          Center(
+          //dumb solution to force animation to play
+          Container(
+            alignment: Alignment.center,
             child: Text("Settings"),
           ),
-        ],
+        ][currentItem],
       ),
     );
   }
