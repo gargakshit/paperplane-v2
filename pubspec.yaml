@@ -20,7 +20,7 @@ dependencies:
   path_provider: ^1.6.8
   uuid: ^2.0.4
   aes_crypt: ^0.1.1
-  path: ^1.7.0
+  path:
   image_cropper: ^1.2.2
   flutter_secure_storage:
     git: https://github.com/mogol/flutter_secure_storage
