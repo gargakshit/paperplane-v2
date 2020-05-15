@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PaperPlane',
-      themeMode: ThemeMode.system,
       theme: ThemeData(
         primaryColor: primaryColorLight,
         accentColor: primaryColorLight,
@@ -59,7 +58,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         pageTransitionsTheme: pageTransitionsTheme,
       ),
-      darkTheme: ThemeData(
+      darkTheme: ThemeData.dark().copyWith(
         primaryColor: primaryColorDark,
         accentColor: primaryColorDark,
         iconTheme: IconThemeData(
