@@ -25,8 +25,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

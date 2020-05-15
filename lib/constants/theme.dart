@@ -76,3 +76,8 @@ PageTransitionsTheme pageTransitionsTheme = PageTransitionsTheme(
     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
   },
 );
+
+AppBarTheme appBarTheme = AppBarTheme(
+  color: Colors.transparent,
+  elevation: 0,
+);
