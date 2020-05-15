@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: primaryColorLight,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: appBarTheme.copyWith(
           brightness: Brightness.light,
         ),
       ),
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: primaryColorDark,
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: appBarTheme.copyWith(
           brightness: Brightness.dark,
         ),
         bottomNavigationBarTheme:
