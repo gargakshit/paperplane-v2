@@ -4,20 +4,20 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-import 'package:paperplane/screens/home/chatScreen.dart';
+import 'package:paperplane/screens/home/chat_screen.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final String name;
   final bool hasPfp;
   final String pfpPath;
 
-  HomePage({this.name, this.hasPfp, this.pfpPath});
+  HomeScreen({this.name, this.hasPfp, this.pfpPath});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   int currentItem = 0;
 
   @override
@@ -116,7 +116,6 @@ class _HomePageState extends State<HomePage> {
           Center(
             child: Text("Contacts"),
           ),
-          //dumb solution to force animation to play
           Container(
             alignment: Alignment.center,
             child: Text("Settings"),

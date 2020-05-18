@@ -3,14 +3,14 @@ import 'dart:isolate';
 
 import 'package:aes_crypt/aes_crypt.dart';
 
-class EncFuncParam {
+class EncryptionFunctionParameter {
   AesCrypt crypt;
   File file;
   SendPort sendPort;
   String pfpPath;
   String encPath;
 
-  EncFuncParam({
+  EncryptionFunctionParameter({
     this.file,
     this.crypt,
     this.sendPort,

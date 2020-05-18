@@ -1,21 +1,22 @@
 import 'dart:convert';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:paperplane/constants/onBoardingState.dart';
 import 'package:pinenacl/secret.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:paperplane/api/accounts.dart';
-import 'package:paperplane/models/accounts/register.dart';
-import 'package:paperplane/screens/onboarding/updateProfile.dart';
+import 'update_profile_screen.dart';
+import '../../api/accounts.dart';
+import '../../constants/onboarding_state.dart';
+import '../../models/accounts/register.dart';
 
-class NewAccountPage extends StatefulWidget {
+class NewAccountScreen extends StatefulWidget {
   @override
-  _NewAccountPageState createState() => _NewAccountPageState();
+  _NewAccountScreenState createState() => _NewAccountScreenState();
 }
 
-class _NewAccountPageState extends State<NewAccountPage> {
+class _NewAccountScreenState extends State<NewAccountScreen> {
   bool idGenerated = false;
   String id = "";
   bool error = false;
@@ -123,14 +124,14 @@ class _NewAccountPageState extends State<NewAccountPage> {
                           if (!error) {
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (_) => UpdateProfilePage(),
+                                builder: (_) => UpdateProfileScreen(),
                               ),
                               (Route<dynamic> route) => false,
                             );
                           } else {
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (_) => NewAccountPage(),
+                                builder: (_) => NewAccountScreen(),
                               ),
                               (Route<dynamic> route) => false,
                             );

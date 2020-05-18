@@ -13,19 +13,19 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:paperplane/constants/onBoardingState.dart';
-import 'package:paperplane/constants/api.dart';
-import 'package:paperplane/constants/colors.dart';
-import 'package:paperplane/models/ui/encFuncParam.dart';
-import 'package:paperplane/utils/encrypt.dart';
-import 'package:paperplane/main.dart';
+import '../../constants/onboarding_state.dart';
+import '../../constants/api.dart';
+import '../../constants/colors.dart';
+import '../../models/ui/encFuncParam.dart';
+import '../../utils/encrypt.dart';
+import '../../main.dart';
 
-class UpdateProfilePage extends StatefulWidget {
+class UpdateProfileScreen extends StatefulWidget {
   @override
-  _UpdateProfilePageState createState() => _UpdateProfilePageState();
+  _UpdateProfileScreenState createState() => _UpdateProfileScreenState();
 }
 
-class _UpdateProfilePageState extends State<UpdateProfilePage> {
+class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   File profilePhoto;
   TextEditingController nameController;
   bool isButtonVisible = false;
@@ -214,7 +214,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
                                   await Isolate.spawn(
                                     encryptProfilePhoto,
-                                    EncFuncParam(
+                                    EncryptionFunctionParameter(
                                       file: profilePhoto,
                                       crypt: crypt,
                                       sendPort: receivePort.sendPort,

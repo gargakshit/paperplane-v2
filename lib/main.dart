@@ -3,14 +3,17 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:paperplane/constants/colors.dart';
-import 'package:paperplane/screens/onboarding/gettingStarted.dart';
-import 'package:paperplane/screens/home/homePage.dart';
-import 'package:paperplane/models/ui/loadingModel.dart';
-import 'package:paperplane/constants/theme.dart';
+import 'constants/colors.dart';
+import 'constants/theme.dart';
+import 'models/ui/loading_model.dart';
+import 'screens/home/home_screen.dart';
+import 'screens/onboarding/getting_started_screen.dart';
+import 'services/locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  setupServiceLocator();
 
   runApp(MyApp());
 }
@@ -103,13 +106,13 @@ class MyApp extends StatelessWidget {
         builder: (ctx, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.onboardingDone) {
-              return HomePage(
+              return HomeScreen(
                 name: snapshot.data.name,
                 hasPfp: snapshot.data.hasPfp,
                 pfpPath: snapshot.data.pfpPath,
               );
             } else {
-              return GettingStartedPage();
+              return GettingStartedScreen();
             }
           }
           return Container();
