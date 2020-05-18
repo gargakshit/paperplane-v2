@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:paperplane/screens/onboarding/newAccount.dart';
+import '../new_account_screen/new_account_screen.dart';
 
-class GettingStartedPage extends StatelessWidget {
+class GettingStartedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class GettingStartedPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (_) => NewAccountPage(),
+                                builder: (_) => NewAccountScreen(),
                               ),
                               (Route<dynamic> route) => false,
                             );

@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^1.0.0
+  google_fonts: ^1.1.0
   animations: ^1.0.0+5
   pinenacl: ^0.1.2
   animated_text_kit: ^2.0.1
@@ -22,6 +22,8 @@ dependencies:
   aes_crypt: ^0.1.1
   path:
   image_cropper: ^1.2.2
+  stacked: ^1.5.1
+  get_it: ^4.0.2
   flutter_secure_storage:
     git: https://github.com/mogol/flutter_secure_storage
 

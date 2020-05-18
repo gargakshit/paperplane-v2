@@ -1,17 +1,10 @@
-import 'dart:async';
-import 'dart:io';
+import '../models/services/encryption_function.dart';
 
-import 'package:paperplane/models/ui/encFuncParam.dart';
-
-FutureOr<void> encryptProfilePhoto(EncFuncParam encFuncParam) async {
-  await File(encFuncParam.pfpPath).writeAsBytes(
-    await encFuncParam.file.readAsBytes(),
+Future<void> encryptFile(EncryptionFunctionParamater params) async {
+  await params.aesCrypt.encryptFile(
+    params.inputFile.path,
+    params.outputFile.path,
   );
 
-  await encFuncParam.crypt.encryptFile(
-    encFuncParam.file.path,
-    encFuncParam.encPath,
-  );
-
-  encFuncParam.sendPort.send(true);
+  params.sendPort.send(true);
 }
