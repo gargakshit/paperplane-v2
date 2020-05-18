@@ -15,6 +15,7 @@ class FileEncryptionServiceAesCrypt extends FileEncryptionService {
     String password,
   ) async {
     AesCrypt aesCrypt = AesCrypt(password);
+    aesCrypt.setOverwriteMode(AesCryptOwMode.on);
 
     ReceivePort receivePort = ReceivePort();
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'new_account_screen.dart';
+import '../new_account_screen/new_account_screen.dart';
 
 class GettingStartedScreen extends StatelessWidget {
   @override

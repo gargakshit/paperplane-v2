@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:uuid/uuid.dart';
 
 import 'media_service.dart';
 import '../locator.dart';
@@ -13,7 +11,6 @@ class MediaServiceHttp extends MediaService {
   @override
   Future<String> uploadMedia(
       File file, String encryptionKey, String authKey) async {
-    String password = "${Random.secure().nextInt(9999999)}-${Uuid().v4()}";
     File outputFile = File(file.path + '.aes');
 
     FileEncryptionService fileEncryptionService =
@@ -21,7 +18,7 @@ class MediaServiceHttp extends MediaService {
     await fileEncryptionService.encryptFile(
       file,
       outputFile,
-      password,
+      encryptionKey,
     );
 
     Dio dio = locator<Dio>();
