@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constants/colors.dart';
 import 'constants/theme.dart';
 import 'models/ui/loading_model.dart';
-import 'screens/home/home_screen.dart';
+import 'screens/home/home_screen/home_screen.dart';
 import 'screens/onboarding/getting_started_screen/getting_started_screen.dart';
 import 'services/locator.dart';
 
