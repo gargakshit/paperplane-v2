@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/colors.dart';
 import 'constants/theme.dart';
@@ -18,8 +19,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final KeyValueService prefs = locator<KeyValueService>();
-
     return MaterialApp(
       title: 'PaperPlane',
       theme: ThemeData(
@@ -70,9 +69,18 @@ class MyApp extends StatelessWidget {
                 ),
       ),
       debugShowCheckedModeBanner: false,
-      home: prefs.getBool("onBoardingComplete")
-          ? HomeScreen()
-          : GettingStartedScreen(),
+      home: FutureBuilder<SharedPreferences>(
+        future: SharedPreferences.getInstance(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data.containsKey("onBoardingComplete")
+                ? HomeScreen()
+                : GettingStartedScreen();
+          }
+
+          return Container();
+        },
+      ),
     );
   }
 }

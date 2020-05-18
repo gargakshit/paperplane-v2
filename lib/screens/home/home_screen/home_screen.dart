@@ -14,11 +14,13 @@ class HomeScreen extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           centerTitle: false,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: 12.0,
+                width: 24.0,
               ),
               Text(
                 "PaperPlane",
