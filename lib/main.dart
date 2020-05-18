@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/colors.dart';
 import 'constants/theme.dart';
-import 'models/ui/loading_model.dart';
 import 'screens/home/home_screen/home_screen.dart';
 import 'screens/onboarding/getting_started_screen/getting_started_screen.dart';
 import 'services/locator.dart';
+import 'services/key_value/key_value_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,38 +16,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Future<LoadingModel> loadPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    try {
-      if (prefs.getBool("onBoardingComplete")) {
-        return LoadingModel(
-          onboardingDone: true,
-          hasPfp: prefs.getBool("hasPfp"),
-          name: prefs.getString("myName"),
-          pfpPath:
-              join((await getApplicationDocumentsDirectory()).path, "pfp.png"),
-        );
-      } else {
-        return LoadingModel(
-          onboardingDone: false,
-          hasPfp: false,
-          name: "",
-          pfpPath: "",
-        );
-      }
-    } catch (e) {
-      return LoadingModel(
-        onboardingDone: false,
-        hasPfp: false,
-        name: "",
-        pfpPath: "",
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final KeyValueService prefs = locator<KeyValueService>();
+
     return MaterialApp(
       title: 'PaperPlane',
       theme: ThemeData(
@@ -101,23 +70,9 @@ class MyApp extends StatelessWidget {
                 ),
       ),
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder<LoadingModel>(
-        future: loadPrefs(),
-        builder: (ctx, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data.onboardingDone) {
-              return HomeScreen(
-                name: snapshot.data.name,
-                hasPfp: snapshot.data.hasPfp,
-                pfpPath: snapshot.data.pfpPath,
-              );
-            } else {
-              return GettingStartedScreen();
-            }
-          }
-          return Container();
-        },
-      ),
+      home: prefs.getBool("onBoardingComplete")
+          ? HomeScreen()
+          : GettingStartedScreen(),
     );
   }
 }
