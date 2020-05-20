@@ -41,9 +41,6 @@ class UpdateProfileViewModel extends ChangeNotifier {
     notifyListeners();
 
     AccountsService accountsService = locator<AccountsService>();
-    await Future.delayed(
-      Duration(seconds: 1),
-    );
     await accountsService.initializeProfile(_nameController.text, profilePhoto);
 
     _isLoading = false;

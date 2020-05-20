@@ -12,28 +12,10 @@ class HomeScreen extends StatelessWidget {
     return ViewModelBuilder<HomeScreenViewModel>.reactive(
       viewModelBuilder: () => HomeScreenViewModel(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          automaticallyImplyLeading: false,
-          titleSpacing: 0,
-          title: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 24.0,
-              ),
-              Text(
-                "PaperPlane",
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ],
-          ),
-        ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: model.setPage,
           currentIndex: model.currentPage,
           type: BottomNavigationBarType.fixed,
-          elevation: 0,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Feather.message_square),
