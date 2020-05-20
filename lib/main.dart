@@ -6,7 +6,6 @@ import 'constants/theme.dart';
 import 'screens/home/home_screen/home_screen.dart';
 import 'screens/onboarding/getting_started_screen/getting_started_screen.dart';
 import 'services/locator.dart';
-import 'services/key_value/key_value_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,18 +53,8 @@ class MyApp extends StatelessWidget {
         ),
         bottomNavigationBarTheme:
             ThemeData.dark().bottomNavigationBarTheme.copyWith(
-                  unselectedIconTheme: IconThemeData(
-                    color: Colors.white.withOpacity(0.9),
-                  ),
-                  unselectedLabelStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                  ),
-                  selectedIconTheme: IconThemeData(
-                    color: primaryColorDark,
-                  ),
-                  selectedLabelStyle: TextStyle(
-                    color: primaryColorDark,
-                  ),
+                  unselectedItemColor: Colors.white.withOpacity(0.9),
+                  selectedItemColor: primaryColorDark,
                 ),
       ),
       debugShowCheckedModeBanner: false,
