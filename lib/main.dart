@@ -35,6 +35,9 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: appBarTheme.copyWith(
           brightness: Brightness.light,
+          iconTheme: IconThemeData(
+            color: ThemeData.light().textTheme.bodyText1.color,
+          ),
         ),
         canvasColor: Color(0xfff0f0f0),
         scaffoldBackgroundColor: Color(0xfff0f0f0),
@@ -81,6 +84,7 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).brightness == Brightness.dark
                     ? Brightness.light
                     : Brightness.dark,
+            statusBarIconBrightness: Theme.of(context).brightness,
           ),
         );
 

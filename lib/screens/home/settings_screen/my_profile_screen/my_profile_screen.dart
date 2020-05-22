@@ -12,24 +12,13 @@ class MyProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        titleSpacing: 24,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              myName,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            Text(
-              myId,
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ],
-        ),
+      appBar: AppBar(),
+      body: ListView.builder(
+        itemCount: 1,
+        itemBuilder: (context, i) => [
+          Text("hm"),
+        ][i],
       ),
-      body: Text("Works"),
     );
   }
 }

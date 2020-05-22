@@ -9,7 +9,43 @@ class ChatScreen extends StatelessWidget {
         child: Text("Home"),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet<void>(
+            context: context,
+            builder: (context) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: Icon(Feather.user),
+                  title: Text("New Chat"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                ),
+                ListTile(
+                  leading: Icon(Feather.users),
+                  title: Text("New Group"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                ),
+                ListTile(
+                  leading: Icon(FontAwesome.qrcode),
+                  title: Text("Scan QR Code"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24),
+                ),
+                Container(
+                  height: MediaQuery.of(context).padding.bottom,
+                ),
+              ],
+            ),
+          );
+        },
         icon: Icon(
           Feather.plus,
           color: Theme.of(context).canvasColor,

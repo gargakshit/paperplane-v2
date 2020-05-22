@@ -26,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
       // ),
       body: Container(
         child: ListView.builder(
-          itemCount: 6,
+          itemCount: 8,
           itemBuilder: (context, i) => [
             InkWell(
               onTap: () {
@@ -40,9 +40,11 @@ class SettingsScreen extends StatelessWidget {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 24.0,
-                  horizontal: 32.0,
+                padding: EdgeInsets.only(
+                  bottom: 24.0,
+                  top: MediaQuery.of(context).padding.top + 24.0,
+                  left: 32.0,
+                  right: 32.0,
                 ),
                 child: Row(
                   children: [
@@ -81,7 +83,9 @@ class SettingsScreen extends StatelessWidget {
                                   return ClipRRect(
                                     borderRadius: BorderRadius.circular(9999),
                                     child: Image.file(
-                                      File(join(snapshot.data.path, "pfp.png")),
+                                      File(
+                                        join(snapshot.data.path, "pfp.png"),
+                                      ),
                                       fit: BoxFit.cover,
                                     ),
                                   );
@@ -101,6 +105,12 @@ class SettingsScreen extends StatelessWidget {
             ),
             SizedBox(
               height: 4,
+            ),
+            ListTile(
+              leading: Icon(Feather.download_cloud),
+              title: Text("Backups"),
+              contentPadding: EdgeInsets.symmetric(horizontal: 32),
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Feather.bell),
@@ -123,6 +133,12 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Feather.help_circle),
               title: Text("Help"),
+              contentPadding: EdgeInsets.symmetric(horizontal: 32),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Feather.info),
+              title: Text("About"),
               contentPadding: EdgeInsets.symmetric(horizontal: 32),
               onTap: () {},
             ),
