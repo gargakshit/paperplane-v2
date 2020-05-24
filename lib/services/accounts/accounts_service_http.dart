@@ -51,6 +51,7 @@ class AccountsServiceHttp extends AccountsService {
       await prefs.setString("myId", registerResponse.id);
       await prefs.setString("authKey", registerResponse.token);
       await prefs.setString("authKeyTime", DateTime.now().toString());
+      await prefs.setString("refreshToken", registerResponse.refreshToken);
       await prefs.setBool("onBoardingComplete", false);
       await prefs.setInt("onBoardingState", OnBoardingState.ID_GENERATED.index);
 
