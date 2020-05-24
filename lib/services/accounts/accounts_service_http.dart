@@ -57,7 +57,7 @@ class AccountsServiceHttp extends AccountsService {
 
       return registerResponse;
     } else {
-      throw new Exception("Error registering the user!");
+      throw Exception("Error registering the user!");
     }
   }
 
@@ -99,5 +99,47 @@ class AccountsServiceHttp extends AccountsService {
       "onBoardingState",
       OnBoardingState.ABOUT_UPDATED.index,
     );
+  }
+
+  Future<String> getUserPublicKey(String id) async {
+    Dio dio = locator<Dio>();
+    Response<String> response = await dio.get("$directoryUrl/$id");
+
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      throw Exception("Error pulling the public keys!");
+    }
+  }
+
+  Future<String> refreshToken() async {
+    KeyValueService prefs = locator<KeyValueService>();
+
+    DateTime oldTokenIssueTime = DateTime.parse(prefs.getString("authKeyTime"));
+    if (oldTokenIssueTime.add(Duration(minutes: 50)).isBefore(DateTime.now())) {
+      // fetch new token
+      Dio dio = locator<Dio>();
+      String refreshToken = prefs.getString("refreshToken");
+
+      Response<String> response = await dio.post(
+        "$authUrl/refresh",
+        options: Options(
+          headers: {
+            "X-Refresh-Token": refreshToken,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        await prefs.setString("authKey", response.data);
+        await prefs.setString("authKeyTime", DateTime.now().toString());
+
+        return response.data;
+      } else {
+        throw Exception("Error refreshing the token!");
+      }
+    } else {
+      return prefs.getString("authKey");
+    }
   }
 }
