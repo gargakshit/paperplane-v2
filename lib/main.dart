@@ -7,6 +7,7 @@ import 'constants/theme.dart';
 import 'screens/home/home_screen/home_screen.dart';
 import 'screens/onboarding/getting_started_screen/getting_started_screen.dart';
 import 'services/locator.dart';
+import 'utils/is_dark.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,13 +78,9 @@ class MyApp extends StatelessWidget {
         SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(
             systemNavigationBarColor:
-                Theme.of(context).brightness == Brightness.dark
-                    ? Color(0xff212121)
-                    : Colors.white,
+                isDark(context) ? Color(0xff212121) : Colors.white,
             systemNavigationBarIconBrightness:
-                Theme.of(context).brightness == Brightness.dark
-                    ? Brightness.light
-                    : Brightness.dark,
+                isDark(context) ? Brightness.light : Brightness.dark,
             statusBarIconBrightness: Theme.of(context).brightness,
           ),
         );
@@ -94,7 +91,8 @@ class MyApp extends StatelessWidget {
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return snapshot.data.containsKey("onBoardingComplete")
+            return snapshot.data.containsKey("onBoardingComplete") &&
+                    snapshot.data.getBool("onBoardingComplete")
                 ? HomeScreen()
                 : GettingStartedScreen();
           }

@@ -24,6 +24,7 @@ dependencies:
   image_cropper: ^1.2.2
   stacked: ^1.5.1
   get_it: ^4.0.2
+  qr_flutter: ^3.2.0
   flutter_secure_storage:
     git: https://github.com/mogol/flutter_secure_storage
 

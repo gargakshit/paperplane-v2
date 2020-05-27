@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'my_profile_screen/my_profile_screen.dart';
 import '../../../services/locator.dart';
 import '../../../services/key_value/key_value_service.dart';
+import '../../../widgets/letter_pfp.dart';
+import '../../../utils/is_dark.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -15,15 +19,47 @@ class SettingsScreen extends StatelessWidget {
     final KeyValueService prefs = locator<KeyValueService>();
 
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: false,
-      //   automaticallyImplyLeading: false,
-      //   titleSpacing: 32,
-      //   title: Text(
-      //     "Settings",
-      //     style: Theme.of(context).textTheme.headline5,
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              actions: [
+                FlatButton(
+                  child: Text("DONE"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+              backgroundColor: Theme.of(context).canvasColor,
+              content: Container(
+                height: 240,
+                width: 180,
+                child: Center(
+                  child: QrImage(
+                    data: jsonEncode({
+                      "type": "user",
+                      "name": prefs.getString("myName"),
+                      "id": prefs.getString("myId"),
+                    }),
+                    size: 256,
+                    foregroundColor:
+                        isDark(context) ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+              ),
+            ),
+          );
+        },
+        label: Text("SHOW QR CODE"),
+        icon: Icon(FontAwesome.qrcode),
+      ),
       body: Container(
         child: ListView.builder(
           itemCount: 8,
@@ -71,10 +107,9 @@ class SettingsScreen extends StatelessWidget {
                     Container(
                       width: 56,
                       child: !prefs.getBool("hasPfp")
-                          ? getLetterPfp(
-                              context,
-                              prefs.getString("myName"),
-                              56,
+                          ? LetterPfp(
+                              name: prefs.getString("myName"),
+                              size: 56,
                             )
                           : FutureBuilder<Directory>(
                               future: getApplicationDocumentsDirectory(),
@@ -91,10 +126,9 @@ class SettingsScreen extends StatelessWidget {
                                   );
                                 }
 
-                                return getLetterPfp(
-                                  context,
-                                  prefs.getString("myName"),
-                                  56,
+                                return LetterPfp(
+                                  name: prefs.getString("myName"),
+                                  size: 56,
                                 );
                               },
                             ),
@@ -143,27 +177,6 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {},
             ),
           ][i],
-        ),
-      ),
-    );
-  }
-
-  Widget getLetterPfp(BuildContext context, String name, double size) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(9999),
-      ),
-      width: size,
-      height: size,
-      child: Center(
-        child: Text(
-          name.substring(0, 1).toUpperCase(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w900,
-            color: Theme.of(context).canvasColor,
-          ),
         ),
       ),
     );

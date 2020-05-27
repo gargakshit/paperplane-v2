@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import 'update_profile_viewmodel.dart';
 import '../../../constants/colors.dart';
 import '../../../main.dart';
+import '../../../utils/is_dark.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   @override
@@ -94,8 +95,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(9999),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
+                                  color: !isDark(context)
                                       ? Colors.grey[400]
                                       : Colors.grey[900],
                                   spreadRadius: 12,
