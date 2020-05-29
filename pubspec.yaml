@@ -29,7 +29,6 @@ dependencies:
     git: https://github.com/mogol/flutter_secure_storage
   moor: ^3.1.0
   moor_ffi: ^0.6.0
-  moor_flutter: ^3.0.0
   blurhash_dart: ^0.2.3
   flutter_blurhash: ^0.5.0
   image: ^2.1.13

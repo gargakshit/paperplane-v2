@@ -81,7 +81,8 @@ class MyApp extends StatelessWidget {
                 isDark(context) ? Color(0xff212121) : Colors.white,
             systemNavigationBarIconBrightness:
                 isDark(context) ? Brightness.light : Brightness.dark,
-            statusBarIconBrightness: Theme.of(context).brightness,
+            statusBarIconBrightness:
+                isDark(context) ? Brightness.light : Brightness.dark,
           ),
         );
 
