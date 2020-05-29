@@ -24,14 +24,14 @@ class SettingsScreen extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              actions: [
-                FlatButton(
-                  child: Text("DONE"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
+              // actions: [
+              //   FlatButton(
+              //     child: Text("BACK"),
+              //     onPressed: () {
+              //       Navigator.of(context).pop();
+              //     },
+              //   )
+              // ],
               backgroundColor: Theme.of(context).canvasColor,
               content: Container(
                 height: 240,

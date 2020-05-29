@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:image/image.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     hide Options;
 import 'package:path/path.dart' show join;
@@ -12,6 +13,7 @@ import 'package:uuid/uuid.dart';
 
 import 'accounts_service.dart';
 import '../locator.dart';
+import '../blurhash/blurhash_service.dart';
 import '../key_value/key_value_service.dart';
 import '../media/media_service.dart';
 import '../nacl/nacl_service.dart';
@@ -62,22 +64,37 @@ class AccountsServiceHttp extends AccountsService {
   }
 
   Future<void> initializeProfile(String name, File profilePhoto) async {
-    MediaService mediaService = locator<MediaService>();
     KeyValueService prefs = locator<KeyValueService>();
 
     await prefs.setBool("hasPfp", false);
 
     if (profilePhoto != null) {
-      String docsDir = (await getApplicationDocumentsDirectory()).path;
+      MediaService mediaService = locator<MediaService>();
+      BlurHashService blurHashService = locator<BlurHashService>();
 
-      await File(join(docsDir, "pfp.png")).writeAsBytes(
-        await profilePhoto.readAsBytes(),
+      String docsDir = (await getApplicationDocumentsDirectory()).path;
+      Image profilePhotoLoaded = decodeImage(profilePhoto.readAsBytesSync());
+      Image profilePhotoResized = copyResize(
+        profilePhotoLoaded,
+        width: 512,
+      );
+
+      File profilePhotoPng = File(join(docsDir, "pfp.png"));
+      profilePhotoPng.writeAsBytesSync(
+        encodePng(profilePhotoResized),
+      );
+
+      Image blurHashImage = copyResize(profilePhotoResized, width: 20);
+      String blurHash = await blurHashService.encode(
+        blurHashImage.getBytes(format: Format.rgba),
+        blurHashImage.width,
+        blurHashImage.height,
       );
 
       String password = "${Random.secure().nextInt(9999999)}-${Uuid().v4()}";
 
       String mediaId = await mediaService.uploadMedia(
-        profilePhoto,
+        profilePhotoPng,
         password,
         prefs.getString("authKey"),
       );
@@ -88,6 +105,7 @@ class AccountsServiceHttp extends AccountsService {
         "pfpMediaId",
         mediaId,
       );
+      await prefs.setString("pfpBlurHash", blurHash);
     }
 
     await prefs.setString(

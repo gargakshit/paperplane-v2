@@ -20,7 +20,7 @@ class UpdateProfileScreen extends StatelessWidget {
       builder: (context, model, child) {
         pickPhoto() async {
           try {
-            final image =
+            final File image =
                 await ImagePicker.pickImage(source: ImageSource.gallery);
 
             File croppedFile = await ImageCropper.cropImage(
@@ -33,20 +33,20 @@ class UpdateProfileScreen extends StatelessWidget {
                 ratioY: 1,
               ),
               compressFormat: ImageCompressFormat.png,
-              maxHeight: 640,
-              maxWidth: 640,
+              maxHeight: 512,
+              maxWidth: 512,
               compressQuality: 100,
               cropStyle: CropStyle.rectangle,
               androidUiSettings: AndroidUiSettings(
                 toolbarTitle: "Crop",
-                toolbarColor: Color(0xff151618),
+                toolbarColor: canvasColorDark,
                 activeControlsWidgetColor: primaryColorLight,
                 toolbarWidgetColor: Colors.white,
-                statusBarColor: Color(0xff151618),
+                statusBarColor: canvasColorDark,
                 initAspectRatio: CropAspectRatioPreset.square,
                 lockAspectRatio: true,
-                backgroundColor: Color(0xff151618),
-                dimmedLayerColor: Color(0xff151618),
+                backgroundColor: canvasColorDark,
+                dimmedLayerColor: canvasColorDark,
                 cropFrameStrokeWidth: 8,
                 cropGridStrokeWidth: 6,
               ),

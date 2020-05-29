@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'accounts/accounts_service.dart';
 import 'accounts/accounts_service_http.dart';
+import 'blurhash/blurhash_service.dart';
+import 'blurhash/blurhash_service_blurhash.dart';
 import 'file_encryption/file_encryption_service.dart';
 import 'file_encryption/file_encryption_service_aescrypt.dart';
 import 'key_value/key_value_service.dart';
@@ -21,13 +23,22 @@ void setupServiceLocator() {
     () async => await SharedPreferences.getInstance(),
   );
 
-  locator.registerLazySingleton<AccountsService>(() => AccountsServiceHttp());
+  locator.registerLazySingleton<AccountsService>(
+    () => AccountsServiceHttp(),
+  );
+  locator.registerLazySingleton<BlurHashService>(
+    () => BlurHashServiceBlurHash(),
+  );
   locator.registerLazySingleton<FileEncryptionService>(
     () => FileEncryptionServiceAesCrypt(),
   );
   locator.registerLazySingleton<KeyValueService>(
     () => KeyValueServiceSharedPrefs(),
   );
-  locator.registerLazySingleton<MediaService>(() => MediaServiceHttp());
-  locator.registerLazySingleton<NaClService>(() => NaClServicePineNaCl());
+  locator.registerLazySingleton<MediaService>(
+    () => MediaServiceHttp(),
+  );
+  locator.registerLazySingleton<NaClService>(
+    () => NaClServicePineNaCl(),
+  );
 }

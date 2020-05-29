@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
             color: ThemeData.light().textTheme.bodyText1.color,
           ),
         ),
-        canvasColor: Color(0xfff0f0f0),
-        scaffoldBackgroundColor: Color(0xfff0f0f0),
+        canvasColor: canvasColorLight,
+        scaffoldBackgroundColor: canvasColorLight,
         bottomNavigationBarTheme:
             ThemeData.light().bottomNavigationBarTheme.copyWith(
                   backgroundColor: Colors.white,
@@ -63,8 +63,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: appBarTheme.copyWith(
           brightness: Brightness.dark,
         ),
-        canvasColor: Color(0xff151618),
-        scaffoldBackgroundColor: Color(0xff151618),
+        canvasColor: canvasColorDark,
+        scaffoldBackgroundColor: canvasColorDark,
         bottomNavigationBarTheme:
             ThemeData.dark().bottomNavigationBarTheme.copyWith(
                   unselectedItemColor: Colors.white.withOpacity(0.9),

@@ -22,8 +22,8 @@ class HomeScreen extends StatelessWidget {
               title: Text("Chat"),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Feather.users),
-              title: Text("Contacts"),
+              icon: Icon(Feather.phone_call),
+              title: Text("Calls"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Feather.settings),
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             ChatScreen(),
             Center(
-              child: Text("Contacts"),
+              child: Text("Calls"),
             ),
             SettingsScreen(),
           ],
