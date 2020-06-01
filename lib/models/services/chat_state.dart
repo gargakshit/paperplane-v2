@@ -1,0 +1,12 @@
+class ChatState {
+  ChatStage stage = ChatStage.INITIAL;
+}
+
+enum ChatStage {
+  INITIAL,
+  SERVER_KEYS_RECV,
+  CLIENT_KEYS_SENT,
+  CHALLANGE_RECV,
+  CHALLANGE_RESULT_SENT,
+  VERIFIED_AND_STARTED,
+}

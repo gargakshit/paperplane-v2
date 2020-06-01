@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:image/image.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     hide Options;
+import 'package:moor/moor.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:pinenacl/secret.dart';
@@ -20,6 +22,8 @@ import '../nacl/nacl_service.dart';
 import '../../constants/api.dart';
 import '../../constants/onboarding_state.dart';
 import '../../models/accounts/register.dart';
+import '../../models/services/resize_function.dart';
+import '../../utils/resize_image.dart';
 
 class AccountsServiceHttp extends AccountsService {
   @override
@@ -34,6 +38,17 @@ class AccountsServiceHttp extends AccountsService {
     PublicKey pubKey = myKeys.publicKey;
 
     await storage.write(key: "myPrivateKey", value: myKeys.join(","));
+
+    Response keyResponse = await dio.get("$baseUrl/keys");
+
+    if (keyResponse.statusCode == 200) {
+      String serverKeyBase64 = keyResponse.data;
+      Uint8List serverKey = base64Decode(serverKeyBase64);
+
+      await prefs.setString("serverKey", serverKey.join(","));
+    } else {
+      throw Exception("Error fetching server keys");
+    }
 
     Response response = await dio.post(
       "$directoryUrl/register",
@@ -74,17 +89,33 @@ class AccountsServiceHttp extends AccountsService {
 
       String docsDir = (await getApplicationDocumentsDirectory()).path;
       Image profilePhotoLoaded = decodeImage(profilePhoto.readAsBytesSync());
-      Image profilePhotoResized = copyResize(
-        profilePhotoLoaded,
-        width: 512,
+
+      ReceivePort resizeOnePort = ReceivePort();
+      await Isolate.spawn(
+        resizeImage,
+        ResizeFunctionParameter(
+          resizeOnePort.sendPort,
+          profilePhotoLoaded,
+          width: 512,
+        ),
       );
+      Image profilePhotoResized = await resizeOnePort.first;
 
       File profilePhotoPng = File(join(docsDir, "pfp.png"));
       profilePhotoPng.writeAsBytesSync(
         encodePng(profilePhotoResized),
       );
 
-      Image blurHashImage = copyResize(profilePhotoResized, width: 20);
+      ReceivePort resizeTwoPort = ReceivePort();
+      await Isolate.spawn(
+        resizeImage,
+        ResizeFunctionParameter(
+          resizeTwoPort.sendPort,
+          profilePhotoResized,
+          width: 64,
+        ),
+      );
+      Image blurHashImage = await resizeTwoPort.first;
       String blurHash = await blurHashService.encode(
         blurHashImage.getBytes(format: Format.rgba),
         blurHashImage.width,

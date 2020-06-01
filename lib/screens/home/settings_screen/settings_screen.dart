@@ -174,7 +174,11 @@ class SettingsScreen extends StatelessWidget {
               leading: Icon(Feather.info),
               title: Text("About"),
               contentPadding: EdgeInsets.symmetric(horizontal: 32),
-              onTap: () {},
+              onTap: () {
+                showAboutDialog(
+                  context: context,
+                );
+              },
             ),
           ][i],
         ),

@@ -1,5 +1,5 @@
-String baseUrl = "https://api-test.chat.paperplane.ml";
-// String baseUrl = "http://localhost:3005";
+// String baseUrl = "https://api-test.chat.paperplane.ml";
+String baseUrl = "http://localhost:3005";
 String authUrl = "$baseUrl/auth";
 String directoryUrl = "$baseUrl/directory";
 String mediaUrl = "$baseUrl/media";

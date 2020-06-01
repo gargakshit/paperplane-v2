@@ -14,6 +14,7 @@ import 'media/media_service.dart';
 import 'media/media_service_http.dart';
 import 'nacl/nacl_service.dart';
 import 'nacl/nacl_service_pinenacl.dart';
+import '../models/services/chat_state.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -22,6 +23,7 @@ void setupServiceLocator() {
   locator.registerSingletonAsync<SharedPreferences>(
     () async => await SharedPreferences.getInstance(),
   );
+  locator.registerSingleton<ChatState>(ChatState());
 
   locator.registerLazySingleton<AccountsService>(
     () => AccountsServiceHttp(),
