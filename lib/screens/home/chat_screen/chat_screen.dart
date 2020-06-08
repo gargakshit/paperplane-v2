@@ -9,7 +9,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => ChatScreenViewModel(),
-      onModelReady: (model) => model.initSocket(),
+      onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
         body: Center(
           child: Text("Home"),

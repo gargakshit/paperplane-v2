@@ -20,7 +20,6 @@ dependencies:
   path_provider: ^1.6.8
   uuid: ^2.0.4
   aes_crypt: ^0.1.1
-  path:
   image_cropper: ^1.2.2
   stacked: ^1.5.1
   get_it: ^4.0.2
@@ -32,6 +31,7 @@ dependencies:
   blurhash_dart: ^0.2.3
   flutter_blurhash: ^0.5.0
   image: ^2.1.13
+  path: ^1.7.0
 
 dev_dependencies:
   flutter_test:
