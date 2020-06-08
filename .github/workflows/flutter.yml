@@ -1,4 +1,4 @@
-name: Flutter Test
+name: Run flutter tests
 
 on: [push, pull_request]
 
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: cirrusci/flutter:latest
+      image: oursky/flutter:latest
 
     steps:
       - uses: actions/checkout@v2
