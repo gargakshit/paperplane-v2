@@ -78,6 +78,7 @@ class AccountsServiceHttp implements AccountsService {
     }
   }
 
+  @override
   Future<void> initializeProfile(String name, File profilePhoto) async {
     KeyValueService prefs = locator<KeyValueService>();
 
@@ -150,6 +151,7 @@ class AccountsServiceHttp implements AccountsService {
     );
   }
 
+  @override
   Future<String> getUserPublicKey(String id) async {
     Dio dio = locator<Dio>();
     Response<String> response = await dio.get("$directoryUrl/$id");
@@ -161,6 +163,7 @@ class AccountsServiceHttp implements AccountsService {
     }
   }
 
+  @override
   Future<String> refreshToken() async {
     KeyValueService prefs = locator<KeyValueService>();
 
