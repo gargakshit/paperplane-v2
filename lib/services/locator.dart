@@ -10,6 +10,8 @@ import 'chat/chat_service.dart';
 import 'chat/chat_service_tcp.dart';
 import 'file_encryption/file_encryption_service.dart';
 import 'file_encryption/file_encryption_service_aescrypt.dart';
+import 'image/image_service.dart';
+import 'image/image_service_impl.dart';
 import 'key_value/key_value_service.dart';
 import 'key_value/key_value_service_sharedprefs.dart';
 import 'media/media_service.dart';
@@ -36,6 +38,9 @@ void setupServiceLocator() {
   locator.registerLazySingleton<ChatService>(() => ChatServiceTcp());
   locator.registerLazySingleton<FileEncryptionService>(
     () => FileEncryptionServiceAesCrypt(),
+  );
+  locator.registerLazySingleton<ImageService>(
+    () => ImageServiceImpl(),
   );
   locator.registerLazySingleton<KeyValueService>(
     () => KeyValueServiceSharedPrefs(),
