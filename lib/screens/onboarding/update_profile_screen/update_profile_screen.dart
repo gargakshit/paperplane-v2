@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 import 'update_profile_viewmodel.dart';
-import '../../../constants/colors.dart';
 import '../../../main.dart';
 import '../../../utils/is_dark.dart';
 
@@ -18,50 +13,6 @@ class UpdateProfileScreen extends StatelessWidget {
       viewModelBuilder: () => UpdateProfileViewModel(),
       onModelReady: (model) => model.init(),
       builder: (context, model, child) {
-        pickPhoto() async {
-          try {
-            final File image =
-                await ImagePicker.pickImage(source: ImageSource.gallery);
-
-            File croppedFile = await ImageCropper.cropImage(
-              sourcePath: image.path,
-              aspectRatioPresets: [
-                CropAspectRatioPreset.square,
-              ],
-              aspectRatio: CropAspectRatio(
-                ratioX: 1,
-                ratioY: 1,
-              ),
-              compressFormat: ImageCompressFormat.png,
-              maxHeight: 512,
-              maxWidth: 512,
-              compressQuality: 100,
-              cropStyle: CropStyle.rectangle,
-              androidUiSettings: AndroidUiSettings(
-                toolbarTitle: "Crop",
-                toolbarColor: canvasColorDark,
-                activeControlsWidgetColor: primaryColorLight,
-                toolbarWidgetColor: Colors.white,
-                statusBarColor: canvasColorDark,
-                initAspectRatio: CropAspectRatioPreset.square,
-                lockAspectRatio: true,
-                backgroundColor: canvasColorDark,
-                dimmedLayerColor: canvasColorDark,
-                cropFrameStrokeWidth: 8,
-                cropGridStrokeWidth: 6,
-              ),
-              iosUiSettings: IOSUiSettings(
-                minimumAspectRatio: 1.0,
-                aspectRatioLockEnabled: true,
-                aspectRatioPickerButtonHidden: true,
-                showCancelConfirmationDialog: true,
-              ),
-            );
-
-            model.setProfilePhoto(croppedFile);
-          } catch (e) {}
-        }
-
         return Scaffold(
           body: SafeArea(
             child: Container(
@@ -83,7 +34,7 @@ class UpdateProfileScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (!model.isLoading) {
-                            pickPhoto();
+                            model.pickPhoto();
                           }
                         },
                         child: InkWell(

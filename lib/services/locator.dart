@@ -6,6 +6,8 @@ import 'accounts/accounts_service.dart';
 import 'accounts/accounts_service_http.dart';
 import 'blurhash/blurhash_service.dart';
 import 'blurhash/blurhash_service_blurhash.dart';
+import 'chat/chat_service.dart';
+import 'chat/chat_service_tcp.dart';
 import 'file_encryption/file_encryption_service.dart';
 import 'file_encryption/file_encryption_service_aescrypt.dart';
 import 'key_value/key_value_service.dart';
@@ -31,6 +33,7 @@ void setupServiceLocator() {
   locator.registerLazySingleton<BlurHashService>(
     () => BlurHashServiceBlurHash(),
   );
+  locator.registerLazySingleton<ChatService>(() => ChatServiceTcp());
   locator.registerLazySingleton<FileEncryptionService>(
     () => FileEncryptionServiceAesCrypt(),
   );
