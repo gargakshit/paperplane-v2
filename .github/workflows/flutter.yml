@@ -3,11 +3,11 @@ name: Run flutter tests
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     container:
-      image: oursky/flutter:latest
+      image: holmusk/flutter-ci:latest
 
     steps:
       - uses: actions/checkout@v2
