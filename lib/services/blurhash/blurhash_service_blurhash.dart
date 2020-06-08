@@ -8,7 +8,7 @@ import 'blurhash_service.dart';
 import '../../models/services/blurhash_function.dart';
 import '../../utils/generate_blurhash.dart';
 
-class BlurHashServiceBlurHash extends BlurHashService {
+class BlurHashServiceBlurHash implements BlurHashService {
   @override
   Future<String> encode(
     Uint8List data,

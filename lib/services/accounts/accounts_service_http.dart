@@ -25,7 +25,7 @@ import '../../models/accounts/register.dart';
 import '../../models/services/resize_function.dart';
 import '../../utils/resize_image.dart';
 
-class AccountsServiceHttp extends AccountsService {
+class AccountsServiceHttp implements AccountsService {
   @override
   Future<RegisterResponseModel> register() async {
     final storage = new FlutterSecureStorage();

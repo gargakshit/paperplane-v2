@@ -7,7 +7,7 @@ import 'file_encryption_service.dart';
 import '../../models/services/encryption_function.dart';
 import '../../utils/encrypt.dart' as utils;
 
-class FileEncryptionServiceAesCrypt extends FileEncryptionService {
+class FileEncryptionServiceAesCrypt implements FileEncryptionService {
   @override
   Future<void> encryptFile(
     File inputFile,

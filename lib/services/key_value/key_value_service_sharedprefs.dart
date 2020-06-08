@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'key_value_service.dart';
 import '../locator.dart';
 
-class KeyValueServiceSharedPrefs extends KeyValueService {
+class KeyValueServiceSharedPrefs implements KeyValueService {
   @override
   Future<bool> clear() async {
     SharedPreferences sharedPrefs = locator<SharedPreferences>();

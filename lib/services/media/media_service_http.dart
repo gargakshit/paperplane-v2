@@ -7,7 +7,7 @@ import '../locator.dart';
 import '../file_encryption/file_encryption_service.dart';
 import '../../constants/api.dart';
 
-class MediaServiceHttp extends MediaService {
+class MediaServiceHttp implements MediaService {
   @override
   Future<String> uploadMedia(
       File file, String encryptionKey, String authKey) async {

@@ -1,11 +1,10 @@
 import 'dart:io';
 
 import 'chat_service.dart';
-import '../locator.dart';
 
 import '../../constants/api.dart';
 
-class ChatServiceTcp extends ChatService {
+class ChatServiceTcp implements ChatService {
   Socket socket;
 
   @override
