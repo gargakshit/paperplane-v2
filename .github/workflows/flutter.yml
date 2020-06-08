@@ -5,10 +5,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    container:
-      image: holmusk/flutter-ci:latest
-
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
