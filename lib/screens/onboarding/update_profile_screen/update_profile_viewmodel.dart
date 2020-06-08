@@ -12,8 +12,8 @@ class UpdateProfileViewModel extends ChangeNotifier {
   File _profilePhoto;
   File get profilePhoto => _profilePhoto;
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController get nameController => _nameController;
+  String _name = "";
+  String get name => _name;
 
   bool _isButtonVisible = false;
   bool get isButtonVisible => _isButtonVisible;
@@ -21,16 +21,25 @@ class UpdateProfileViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  init() {
-    _nameController.addListener(() {
-      if (_nameController.text.isNotEmpty) {
-        _isButtonVisible = true;
-      } else {
-        _isButtonVisible = false;
-      }
+  setName(String name) {
+    _name = name;
 
-      notifyListeners();
-    });
+    notifyListeners();
+
+    if (name.isNotEmpty &&
+        RegExp(
+          r"^[A-z0-9]{4,}.*$|^[A-z0-9]{2,3} [A-z0-9]{2,}.*$",
+        ).hasMatch(name)) {
+      setButtonVisible(true);
+    } else {
+      setButtonVisible(false);
+    }
+  }
+
+  setButtonVisible(bool visible) {
+    _isButtonVisible = visible;
+
+    notifyListeners();
   }
 
   setProfilePhoto(File photo) {
@@ -44,7 +53,7 @@ class UpdateProfileViewModel extends ChangeNotifier {
     notifyListeners();
 
     AccountsService accountsService = locator<AccountsService>();
-    await accountsService.initializeProfile(_nameController.text, profilePhoto);
+    await accountsService.initializeProfile(name, profilePhoto);
 
     _isLoading = false;
     notifyListeners();

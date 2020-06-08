@@ -7,11 +7,17 @@ import '../../../main.dart';
 import '../../../utils/is_dark.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<UpdateProfileViewModel>.reactive(
       viewModelBuilder: () => UpdateProfileViewModel(),
-      onModelReady: (model) => model.init(),
+      onModelReady: (model) {
+        nameController.addListener(() {
+          model.setName(nameController.text);
+        });
+      },
       builder: (context, model, child) {
         return Scaffold(
           body: SafeArea(
@@ -83,7 +89,7 @@ class UpdateProfileScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: TextField(
-                          controller: model.nameController,
+                          controller: nameController,
                           decoration: InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Enter your name",
